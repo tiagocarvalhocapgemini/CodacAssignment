@@ -15,7 +15,7 @@
 
 <a id="intro"></a>
 ## Introduction
-This project is part of the Pyspark Upskilling program with the objective of developing Pyspark and CI skills. The overall task is to grab 2 files locally and perform data filtering, to join dataframes and to upload the final data in a csv file into Github. The uploading into Github is done with an automated pipeline using GitHub Actions.
+This project is part of the Pyspark Upskilling program with the objective of developing Pyspark and CI skills. The overall task is to grab 2 files locally and perform data filtering, to join dataframes and to upload the final data in a csv file into Github.
 
 For more information see the tasks below.
 

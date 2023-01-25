@@ -15,7 +15,7 @@ logger = logging.getLogger(__file__)
 
 path1 = "../CodacAssignment/data/dataset_one.csv"
 path2 = "../CodacAssignment/data/dataset_two.csv"
-list_countries = ["Poland", "France"]
+list_countries = ["Netherlands", "United Kingdom"]
 
 
 def test_raw_data(path1, path2):
