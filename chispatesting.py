@@ -8,13 +8,12 @@ spark = SparkSession\
         .builder\
         .master("local[*]")\
         .appName("chispatesting")\
-        .enableHiveSupport()\
         .getOrCreate()
 
 logger = logging.getLogger(__file__)
 
-path1 = "../CodacAssignment/data/dataset_one.csv"
-path2 = "../CodacAssignment/data/dataset_two.csv"
+path1 = "data/dataset_one.csv"
+path2 = "data/dataset_two.csv"
 list_countries = ["Netherlands", "United Kingdom"]
 
 
@@ -48,8 +47,8 @@ def test_filter_dataframes(list_of_countries):
   """
 
   #Test data
-  raw_data_clients = [(1, "Anna", "Poland"), (2, "Michael", "Portugal"), (3, "Tiago", "Poland"), (4, "Adrian", "France"),
-            (5, "John", "United States"), (6, "Jane", "France"), (7, "Mark", "Poland")]
+  raw_data_clients = [(1, "Anna", "United Kingdom"), (2, "Michael", "Portugal"), (3, "Tiago", "Netherlands"), (4, "Adrian", "Netherlands"),
+            (5, "John", "United Kingdom"), (6, "Jane", "France"), (7, "Mark", "Netherlands")]
 
   clients_dataframe = spark.createDataFrame(raw_data_clients, ["id", "firt_name", "country"])
 
@@ -57,8 +56,8 @@ def test_filter_dataframes(list_of_countries):
   clients_by_country_df = filter_dataframes(clients_dataframe, list_countries)
 
   #Filtered data to test
-  filtered_data_clients = [(1, "Anna", "Poland"), (3, "Tiago", "Poland"), (4, "Adrian", "France"),
-                    (6, "Jane", "France"), (7, "Mark", "Poland")]
+  filtered_data_clients = [(1, "Anna", "United Kingdom"), (3, "Tiago", "Netherlands"), (4, "Adrian", "Netherlands"),
+                    (5, "John", "United Kingdom"), (7, "Mark", "Netherlands")]
 
 
   test_clients_df = spark.createDataFrame(filtered_data_clients, ["id", "firt_name", "country"])
@@ -114,4 +113,4 @@ if __name__ == "__main__":
   test_filter_dataframes(list_countries)
   test_join_dataframes()
   test_final_client_df()
-  logger.warning("All Chispa tests successful")
+  logger.warning("All Chispa tests concluded successfully")

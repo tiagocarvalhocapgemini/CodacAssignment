@@ -8,7 +8,6 @@ spark = SparkSession\
     .builder\
     .master("local[*]")\
     .appName("pysparkAPP")\
-    .enableHiveSupport()\
     .getOrCreate()
 
 #logging module
@@ -53,8 +52,8 @@ def raw_data(clients_path: str,financial_path: str, spark: object) -> object:
                                 StructField("cc_n", LongType(), True)])
 
 
-    clients_df = spark.read.option("delimiter", ",").option("header", True).schema(clients_schema).csv(clients_path)
-    financial_df = spark.read.option("delimiter", ",").option("header", True).schema(financial_schema).csv(financial_path)
+    clients_df = spark.read.format("csv").option("header", True).schema(clients_schema).load(clients_path)
+    financial_df = spark.read.format("csv").option("header", True).schema(financial_schema).load(financial_path)
 
     return clients_df, financial_df
 
