@@ -60,7 +60,7 @@ def raw_data(clients_path: str,financial_path: str, spark: object) -> object:
 def filter_dataframes(clients_df: object, list_of_countries: list) -> object:
 
     """
-    Function that applies the filters required by the problem: limited countries and active users
+    Function that applies the filters required by the problem: limited countries
     """
     clients_by_country_df = clients_df.filter((clients_df.country).isin(list_of_countries))
 
@@ -92,7 +92,7 @@ def create_csv(final_df: object) -> object:
     """
     This function finalizes the project by creating the CSV file to be uploaded into Github.
     """
-    final_df.repartition(1)\
+    final_df.coalesce(1)\
         .write\
         .mode("overwrite")\
         .format("com.databricks.spark.csv")\
