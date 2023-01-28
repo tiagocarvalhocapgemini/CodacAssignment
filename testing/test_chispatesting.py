@@ -38,8 +38,8 @@ def test_raw_data():
   data = [("Anna", 133322433322234), ("Michael", 133322433325543)]
   test_df = spark.createDataFrame(data, ["first_name", "cc_n"])
 
-  path1 = "../Data/dataset_one.csv"
-  path2 = "../Data/dataset_two.csv"
+  path1 = "./Data/dataset_one.csv"
+  path2 = "./Data/dataset_two.csv"
 
   #Values from the real function
   df1, df2 = pysparkAPP.raw_data(path1, path2, spark)
