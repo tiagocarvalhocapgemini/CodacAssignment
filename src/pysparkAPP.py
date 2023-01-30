@@ -1,10 +1,11 @@
 #Imports
-import pyspark
+import logging
 import argparse
 from typing import Tuple
+from logging.handlers import RotatingFileHandler
 from pyspark.sql.functions import col
 from pyspark.sql import SparkSession, DataFrame as SparkDataFrame
-from pyspark.sql.types import IntegerType, StringType, DateType, BooleanType, StructType, StructField, LongType
+from pyspark.sql.types import IntegerType, StringType, StructType, StructField, LongType
 
 #Spark Session with app name
 spark = SparkSession\
@@ -14,10 +15,17 @@ spark = SparkSession\
     .config("spark.logConf", "true")\
     .getOrCreate()
 
-#logging module
 spark.sparkContext.setLogLevel("INFO")
-log4j = spark._jvm.org.apache.log4j
-LOGGER = log4j.LogManager.getLogger("APP Logs:")
+def logs() -> logging.LogRecord:
+    """"
+    Printing out the logs as requested
+    """
+    logger = logging.getLogger("my_logger")
+    logger.setLevel(logging.INFO)
+    handler = RotatingFileHandler(filename="pysparkAPP_logs.log", maxBytes=10000, backupCount=10)
+    logger.addHandler(handler)
+
+    return logger
 
 
 def paths_and_filters(nr_paths: int, nr_parameters: int) -> Tuple[list, list]:
@@ -33,13 +41,15 @@ def paths_and_filters(nr_paths: int, nr_parameters: int) -> Tuple[list, list]:
 
     parser = argparse.ArgumentParser(prog = "Codac Assignment with PySpark")
 
-    parser.add_argument('--paths', type = str, nargs = nr_paths, default = ['../Data/dataset_one.csv', '../Data/dataset_two.csv'],
+    parser.add_argument('--paths', type = str, nargs = nr_paths, 
+                        default = ['../Data/dataset_one.csv', '../Data/dataset_two.csv'],
                          help = "Paths to the local files containing the data")
 
-    parser.add_argument("--filters", type = str, nargs = nr_parameters, default = ["United Kingdom", "Netherlands"], help = "Filters to apply to our data")
+    parser.add_argument("--filters", type = str, nargs = nr_parameters, 
+                        default = ["United Kingdom", "Netherlands"], 
+                        help = "Filters to apply to our data")
     args = parser.parse_args()
 
-    
     return args.paths, args.filters
 
 
@@ -144,22 +154,23 @@ def create_csv(df: SparkDataFrame, file_name: str) -> None:
         .format("com.databricks.spark.csv")\
         .option("header",True)\
         .save(file_name)
-    
+
 if __name__ == "__main__":
 
-    LOGGER.info("Starting the application")
+    logger = logs()
+    logger.info("Starting the application")
     paths, filters = paths_and_filters(2,2)
 
-    LOGGER.info("Retreiving the data from the local machine")
+    logger.info("Retreiving the data from the local machine")
     client_df, financial_df = raw_data(paths[0], paths[1], spark)
 
-    LOGGER.info("Applying the filters")
+    logger.info("Applying the filters")
     filtered_data_clients = filter_dataframes(client_df, filters, "country")
 
-    LOGGER.info("Joining the data")
+    logger.info("Joining the data")
     joined_df = join_dataframes(filtered_data_clients, financial_df, "id")
 
-    LOGGER.info("Removing sensitive information")
+    logger.info("Removing sensitive information")
     df = drop_columns(joined_df, ["first_name", "last_name", "country", "cc_n"])
 
     new_names = {"cc_t": "credit_card_type", 
@@ -167,7 +178,7 @@ if __name__ == "__main__":
                 "id": "client_identifier"}
     df_final = rename_columns(df, new_names)
 
-    LOGGER.info("Preparing the CSV file")
+    logger.info("Preparing the CSV file")
     create_csv(df_final, "clients_data.csv")
 
-    LOGGER.info("All tasks concluded successfully.")
+    logger.info("All tasks concluded successfully.")

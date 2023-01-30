@@ -1,5 +1,4 @@
 from src import pysparkAPP
-import logging
 from pyspark.sql import SparkSession
 from chispa import assert_df_equality
 from chispa.schema_comparer import assert_schema_equality

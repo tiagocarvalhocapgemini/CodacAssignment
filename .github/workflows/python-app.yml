@@ -36,3 +36,8 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Chispa testing with Pytest
       run: pytest
+    - name: Commit and push wheel
+      run: |
+        git add -f ../dist/*whl
+        git commit -m 'pushing new wheel'
+        git push
