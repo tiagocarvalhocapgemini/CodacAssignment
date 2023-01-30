@@ -41,10 +41,6 @@ jobs:
         python -m pip install --user --upgrade build
         python -m build
         find ./dist/*.whl | xargs pip install
-    - name: Configure Git
-      run: |
-        git config --global user.email "tiago.carvalho@capgemini.com"
-        git config --global user.name "tiagocarvalhocapgemini"
     - name: Commit and push wheel
       run: |
         git add -f ./dist/*.whl
