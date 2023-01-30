@@ -38,6 +38,6 @@ jobs:
       run: pytest
     - name: Commit and push wheel
       run: |
-        git add -f ../dist/*whl
+        git add -f ./dist/*whl
         git commit -m 'pushing new wheel'
         git push
