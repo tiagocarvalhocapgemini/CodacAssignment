@@ -49,6 +49,6 @@ jobs:
     - name: Commit and push wheel
       run: |
         git add -f ./dist/*.whl
-        git commit -m 'pushing new wheel'
+        git commit -m 'Final wheel pushed'
         git push
     - run: echo "🍏 This job's status is ${{ job.status }}."
