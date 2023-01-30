@@ -46,10 +46,10 @@ jobs:
         git config --global user.email "tiago.carvalho@capgemini.com"
         git config --global user.name "tiagocarvalhocapgemini"
     - name: Commit and push wheel
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-      run: |
+      uses: |
         git add -f ./dist/*whl
         git commit -m 'pushing new wheel'
         git push
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
     - run: echo "🍏 This job's status is ${{ job.status }}."
