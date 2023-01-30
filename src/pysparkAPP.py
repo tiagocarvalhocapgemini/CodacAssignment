@@ -169,3 +169,5 @@ if __name__ == "__main__":
 
     LOGGER.info("Preparing the CSV file")
     create_csv(df_final, "clients_data.csv")
+
+    LOGGER.info("All tasks concluded successfully.")
