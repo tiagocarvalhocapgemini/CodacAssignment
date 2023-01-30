@@ -40,14 +40,16 @@ jobs:
       run: |
         python -m pip install --user --upgrade build
         python -m build
-        #pip install .
         find ./dist/*.whl | xargs pip install
     - name: Configure Git
       run: |
         git config --global user.email "tiago.carvalho@capgemini.com"
         git config --global user.name "tiagocarvalhocapgemini"
     - name: Commit and push wheel
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
       run: |
         git add -f ./dist/*whl
         git commit -m 'pushing new wheel'
         git push
+    - run: echo "🍏 This job's status is ${{ job.status }}."
