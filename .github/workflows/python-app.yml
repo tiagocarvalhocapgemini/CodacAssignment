@@ -37,10 +37,11 @@ jobs:
     - name: Chispa testing with Pytest
       run: pytest
     - name: Build wheel
-      run: poetry build
-# python -m pip install --user --upgrade build
-# python -m build
-# find ./dist/*.whl | xargs pip install
+      run: |
+#poetry build
+        python -m pip install --user --upgrade build
+        python -m build
+        find ./dist/*.whl | xargs pip install
     - name: Configure Git
       run: |
         git config --global user.email "tiago.carvalho@capgemini.com"
