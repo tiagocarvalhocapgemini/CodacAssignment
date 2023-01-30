@@ -7,7 +7,7 @@ from pyspark.sql.functions import col
 from pyspark.sql import SparkSession, DataFrame as SparkDataFrame
 from pyspark.sql.types import IntegerType, StringType, StructType, StructField, LongType
 
-#Spark Session with app name
+#Spark Session with app nameyes
 spark = SparkSession\
     .builder\
     .master("local[*]")\
