@@ -46,7 +46,7 @@ jobs:
         git config --global user.email "tiago.carvalho@capgemini.com"
         git config --global user.name "tiagocarvalhocapgemini"
     - name: Commit and push wheel
-      uses: |
+      run: |
         git add -f ./dist/*whl
         git commit -m 'pushing new wheel'
         git push
