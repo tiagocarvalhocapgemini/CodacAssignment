@@ -37,6 +37,7 @@ jobs:
     - name: Chispa testing with Pytest
       run: pytest
     - name: Configure Git
+      run: |
         git config --global user.email "tiago.carvalho@capgemini.com"
         git config --global user.name "tiagocarvalhocapgemini"
     - name: Commit and push wheel
