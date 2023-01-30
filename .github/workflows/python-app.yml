@@ -36,6 +36,9 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Chispa testing with Pytest
       run: pytest
+    - name: Configure Git
+        git config --global user.email "tiago.carvalho@capgemini.com"
+        git config --global user.name "tiagocarvalhocapgemini"
     - name: Commit and push wheel
       run: |
         git add -f ./dist/*whl
