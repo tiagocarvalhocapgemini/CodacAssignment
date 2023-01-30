@@ -36,11 +36,15 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Chispa testing with Pytest
       run: pytest
-    - name: Build wheel and install
+    - name: Build wheel
+      run: poetry build
+# python -m pip install --user --upgrade build
+# python -m build
+# find ./dist/*.whl | xargs pip install
+    - name: Configure Git
       run: |
-        python -m pip install --user --upgrade build
-        python -m build
-        find ./dist/*.whl | xargs pip install
+        git config --global user.email "tiago.carvalho@capgemini.com"
+        git config --global user.name "tiagocarvalhocapgemini"
     - name: Commit and push wheel
       run: |
         git add -f ./dist/*.whl
